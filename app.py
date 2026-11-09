@@ -31,7 +31,13 @@ st.write("Enter a news article to check its predicted category.")
 news = st.text_area("Enter News Article")
 
 if st.button("Detect News"):
-    if news.strip():
+    if not news.strip():
+        st.warning("Please enter a news article.")
+
+    elif len(news.strip().split()) < 10:
+        st.warning("Please enter a longer news article (at least 10 words).")
+
+    else:
         cleaned = clean_text(news)
         vectorized = tfidf.transform([cleaned])
 
@@ -45,5 +51,3 @@ if st.button("Detect News"):
 
         st.write("Model confidence:",
                  round(max(probability) * 100, 2), "%")
-    else:
-        st.warning("Please enter a news article.")
