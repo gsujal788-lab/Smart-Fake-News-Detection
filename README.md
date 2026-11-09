@@ -1,123 +1,106 @@
 # Smart Fake News Detection System using NLP
 
 ## Project Overview
-The Smart Fake News Detection System is a machine learning project that classifies news articles as Fake or Real using Natural Language Processing (NLP).
+This project detects whether a news article is likely to be Fake or Real using Natural Language Processing (NLP) and Machine Learning.
 
-The project uses TF-IDF for text feature extraction and compares two machine learning algorithms: Logistic Regression and Multinomial Naive Bayes.
+It uses TF-IDF for text feature extraction and compares two classification algorithms:
+- Logistic Regression
+- Multinomial Naive Bayes
 
-## Objectives
-- Detect potentially fake and real news articles.
-- Apply NLP techniques to clean and process text.
-- Convert text into numerical features using TF-IDF.
-- Train and compare machine learning models.
-- Build an interactive web application using Streamlit.
+## Student Details
+- **Name:** Sujal Ghimire
+- **Roll Number:** AIML-A6/SEP-11832
+- **Program:** AI/ML with Python Training Program
+- **Organization:** InternsElite
+
+## Dataset
+The project uses the ISOT Fake News Dataset:
+- Fake news: `Fake.csv`
+- Real news: `True.csv`
+
+Dataset source:
+- [Fake.csv](https://raw.githubusercontent.com/Reinforz/Fake-News-detection-with-ISOT-Dataset/main/Fake.csv)
+- [True.csv](https://raw.githubusercontent.com/Reinforz/Fake-News-detection-with-ISOT-Dataset/main/True.csv)
+
+Download both files and place them in the notebook's working directory before running the notebook.
+
+The combined dataset contains 44,898 records:
+- Fake: 23,481
+- Real: 21,417
 
 ## Technologies Used
 - Python
-- Pandas
-- NumPy
-- Scikit-learn
+- Pandas and NumPy
 - NLTK
-- Matplotlib
-- Seaborn
+- Scikit-learn
+- Matplotlib and Seaborn
 - Streamlit
 - Joblib
-- Google Colab
 
-## Dataset
-The project uses the ISOT Fake News Dataset.
-
-- Fake.csv – Fake news articles.
-- True.csv – Real news articles.
-
-**Dataset statistics:**
-- Total articles: 44,898
-- Fake articles: 23,481
-- Real articles: 21,417
-- Missing values: 0
-
-## Methodology
-
-### 1. Data Preprocessing
-- Converted text to lowercase.
-- Removed special characters and numbers.
-- Removed English stopwords.
-- Applied lemmatization.
-- Combined news titles and article text.
-
-### 2. Feature Extraction
-TF-IDF (Term Frequency–Inverse Document Frequency) was used to convert text into numerical features.
-
-Maximum features: 5,000.
-
-### 3. Train-Test Split
-- Training data: 80%
-- Testing data: 20%
-
-### 4. Machine Learning Models
-Two algorithms were trained:
-- Logistic Regression
-- Multinomial Naive Bayes
+## Project Workflow
+1. Load and combine the fake and real news datasets.
+2. Assign labels: Fake = 0 and Real = 1.
+3. Clean text using lowercase conversion, removal of non-alphabetic characters, stopword removal, and lemmatization.
+4. Split the cleaned text into training and testing sets (80:20).
+5. Fit TF-IDF on training text only and transform the test text.
+6. Train Logistic Regression and Multinomial Naive Bayes.
+7. Evaluate both models using accuracy, precision, recall, F1-score, and confusion matrices.
+8. Save the trained models and TF-IDF vectorizer using Joblib.
+9. Run the Streamlit application.
 
 ## Model Performance
 
 | Model | Accuracy |
 |---|---:|
-| Logistic Regression | 98.70% |
-| Multinomial Naive Bayes | 93.46% |
+| Logistic Regression | **98.71%** |
+| Multinomial Naive Bayes | **93.44%** |
 
-Logistic Regression achieved the higher accuracy on the test dataset and was selected as the primary model for the Streamlit application.
+Logistic Regression performed better on the test dataset.
 
-## Streamlit Web Application
-The application allows users to enter a news article and receive:
-- Predicted category: Fake News or Real News.
-- Model confidence percentage.
-
-The prediction is based on patterns learned from the training dataset and should not be treated as independent factual verification.
+## Data Leakage Prevention
+The dataset is split before TF-IDF fitting. The vectorizer learns its vocabulary and IDF values from the training text only. The test text is transformed using that already-fitted vectorizer. This prevents test-set information from leaking into training.
 
 ## Project Files
-- `Smart_Fake_News_Detection.ipynb` – Complete Python notebook.
-- `app.py` – Streamlit web application.
-- `logistic_regression_model.pkl` – Trained Logistic Regression model.
-- `naive_bayes_model.pkl` – Trained Naive Bayes model.
-- `tfidf_vectorizer.pkl` – Saved TF-IDF vectorizer.
+- `Smart_Fake_News_Detection.ipynb` — Main project notebook
+- `app.py` — Streamlit application
+- `logistic_regression_model.pkl` — Trained Logistic Regression model
+- `naive_bayes_model.pkl` — Trained Naive Bayes model
+- `tfidf_vectorizer.pkl` — Fitted TF-IDF vectorizer
 
-## How to Run the Project
+## How to Run
 
-### 1. Install Dependencies
-
+### 1. Install dependencies
 ```bash
-pip install pandas numpy scikit-learn nltk matplotlib seaborn streamlit joblib
+pip install pandas numpy matplotlib seaborn scikit-learn nltk streamlit joblib
 ```
 
-### 2. Run the Streamlit Application
+### 2. Download the dataset
+Download `Fake.csv` and `True.csv` from the links in the Dataset section and place them in the notebook's working directory.
 
-Make sure all three model files and `app.py` are in the same folder.
+### 3. Run the notebook
+Open `Smart_Fake_News_Detection.ipynb` in Google Colab or Jupyter Notebook and run the cells in order.
+
+### 4. Run the Streamlit application
+Make sure `app.py` and all three `.pkl` files are in the same folder, then run:
 
 ```bash
 streamlit run app.py
 ```
 
-### 3. Use the Application
-1. Open the Streamlit application in your browser.
-2. Enter a news article.
-3. Click Detect News.
-4. View the predicted category and confidence percentage.
-
 ## Limitations
-- Predictions depend on the dataset used for training.
-- The model may not perform equally well on new or unrelated news sources.
-- High confidence does not guarantee that a news article is factually true or false.
-- The system should be used as a classification aid, not a replacement for fact-checking.
+- Predictions depend on patterns learned from the training dataset.
+- The system does not independently verify facts or news sources.
+- Performance may vary on new topics, publishers, or writing styles.
+- Predictions should not be treated as final proof that a news story is true or false.
 
 ## Future Improvements
-- Train using more diverse and recent news datasets.
-- Explore advanced NLP and deep learning models.
-- Improve performance on unseen news sources.
-- Add source verification and fact-checking features.
+- Use larger and more recent datasets.
+- Add source credibility checks.
+- Explore advanced NLP models.
+- Improve explainability and external testing.
 
 ## Author
-Sujal Ghimire
+**Sujal Ghimire**
 
-## Internship Program
-AI/ML with Python Training Program – InternsElite
+## Disclaimer
+This project is developed for educational purposes as part of the InternsElite AI/ML with Python Training Program.
