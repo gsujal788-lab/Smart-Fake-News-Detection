@@ -11,8 +11,8 @@ nltk.download('stopwords', quiet=True)
 nltk.download('wordnet', quiet=True)
 nltk.download('omw-1.4', quiet=True)
 
-model = joblib.load('logistic_regression_model.pkl')
-tfidf = joblib.load('tfidf_vectorizer.pkl')
+model = joblib.load('logistic_regression_model (1).pkl')
+tfidf = joblib.load('tfidf_vectorizer (1).pkl')
 
 stop_words = set(stopwords.words('english'))
 lemmatizer = WordNetLemmatizer()
